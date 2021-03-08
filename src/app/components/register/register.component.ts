@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   public user:User;
 
   constructor(
-    private _userServices: UserService
+    private _userServices: UserService //$$$$
   ) {
     this.page_title= 'Registrate';
     this.user = new User(1,'','','ROLE_USER','','','','');
@@ -25,9 +25,16 @@ export class RegisterComponent implements OnInit {
     console.log(this._userServices.test());
   }
   onSubmit(form){
-    console.log(this.user);
-
-    form.reset();
+    this._userServices.register(this.user).subscribe(
+      response => {
+        console.log(response);
+          form.reset();
+      },
+      error => {
+        console.log(<any>error);
+        form.reset();
+      }
+    );
   }
 
 }
